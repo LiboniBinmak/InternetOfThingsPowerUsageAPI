@@ -13,5 +13,11 @@ namespace InternetOfThingsPowerUsageAPI.Models.Data
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Appliance> Appliances { get; set; }
+        public DbSet<AppliancePattern> AppliancePatterns { get; set; }
+        public DbSet<ApplianceSensorReading> ApplianceSensorReadings { get; set; }
+        public DbSet<SensorReading> SensorReadings { get; set; }
+        public DbSet<Status> Statuses { get; set; }
     }
 }
