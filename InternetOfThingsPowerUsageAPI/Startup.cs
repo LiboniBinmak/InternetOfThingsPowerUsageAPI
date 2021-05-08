@@ -1,4 +1,5 @@
 using InternetOfThingsPowerUsageAPI.Models.Data;
+using InternetOfThingsPowerUsageAPI.Models.Local;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,10 +25,10 @@ namespace InternetOfThingsPowerUsageAPI
             services.AddControllers();
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddSignalR();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InternetOfThingsPowerUsageAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Internet Of Things Power Usage API", Version = "v1" });
             });
         }
 
@@ -38,13 +39,14 @@ namespace InternetOfThingsPowerUsageAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "InternetOfThingsPowerUsageAPI v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IOT Power Usage API v1"));
             }
             app.UseCors(builder =>
             {
-                builder.AllowAnyOrigin();
+                builder.WithOrigins("http://localhost:4200");
                 builder.AllowAnyMethod();
                 builder.AllowAnyHeader();
+                builder.AllowCredentials();
             });
             app.UseHttpsRedirection();
 
@@ -55,6 +57,7 @@ namespace InternetOfThingsPowerUsageAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<BroadcastHub>("/notify");
             });
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

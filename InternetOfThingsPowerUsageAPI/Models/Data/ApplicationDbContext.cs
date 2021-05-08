@@ -19,5 +19,8 @@ namespace InternetOfThingsPowerUsageAPI.Models.Data
         public DbSet<ApplianceSensorReading> ApplianceSensorReadings { get; set; }
         public DbSet<SensorReading> SensorReadings { get; set; }
         public DbSet<Status> Statuses { get; set; }
+        public DbSet<Town> Towns { get; set; }
+        public DbSet<HouseHold> HouseHolds { get; set; }
+        public DbSet<HouseHoldUser> HouseHoldUsers { get; set; }
     }
 }

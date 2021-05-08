@@ -1,4 +1,6 @@
-﻿namespace InternetOfThingsPowerUsageAPI.Models.Data
+﻿using System;
+
+namespace InternetOfThingsPowerUsageAPI.Models.Data
 {
     public class ApplianceSensorReading
     {
@@ -6,8 +8,9 @@
         public int ApplianceId { get; set; }
         public int SensorReadingId { get; set; }
         public decimal Current { get; set; }
-        public decimal ReactivePower { get; set; }
-        public decimal RealPower { get; set; }
+        public decimal Power { get; set; }
+        public decimal FormFactor { get; set; }
+        public DateTime DateCreated { get; set; }
         public virtual SensorReading SensorReading { get; set; }
         public virtual Appliance Appliance { get; set; }
     }
