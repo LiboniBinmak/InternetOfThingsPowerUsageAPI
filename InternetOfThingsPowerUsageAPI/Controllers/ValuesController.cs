@@ -52,7 +52,8 @@ namespace InternetOfThingsPowerUsageAPI.Controllers
                 FormFactor = value.FormFactor
             });
             _hubContext.Clients.All.SendAsync(BroadcastHubMethod.AppliancePower.GetEnumDescription(), sensor);
-            _hubContext.Clients.All.SendAsync(BroadcastHubMethod.CurrentPower.GetEnumDescription(), (sensorReadingRepository.Find().ToList().Sum(a=>a.Current) * value.Voltage)/1000);
+            _hubContext.Clients.All.SendAsync(BroadcastHubMethod.CurrentPower.GetEnumDescription(),
+                (sensorReadingRepository.Find().ToList().Sum(a=>a.Current) * value.Voltage)/1000);
             return Ok();
         }
     }
